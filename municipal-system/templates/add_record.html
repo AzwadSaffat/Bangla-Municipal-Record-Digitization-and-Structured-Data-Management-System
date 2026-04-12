@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Add Record | BMREMS{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-2">Add Record Manually</h1>
+<p class="text-slate-500 mb-6">Create a new structured municipal record with validation.</p>
+
+<form method="post" class="card grid md:grid-cols-2 gap-4">
+  <label class="field">Holding Number*<input name="holding_no" value="{{ form_data.get('holding_no', '') }}" required /></label>
+  <label class="field">Ward No*<input name="ward_no" value="{{ form_data.get('ward_no', '') }}" required /></label>
+  <label class="field">Circle No*<input name="circle_no" value="{{ form_data.get('circle_no', '') }}" required /></label>
+  <label class="field">Moholla Name (BN + EN)*<input name="moholla_name" placeholder="শুলক বহর / Shulok Bohor" value="{{ form_data.get('moholla_name', '') }}" required /></label>
+  <label class="field">Owner Name (BN + EN)*<input name="owner_name" placeholder="জাকির হোসেন / Zakir Hossain" value="{{ form_data.get('owner_name', '') }}" required /></label>
+  <label class="field">Father/Husband Name (BN + EN)*<input name="father_name" value="{{ form_data.get('father_name', '') }}" required /></label>
+  <label class="field md:col-span-2">Address (optional)<input name="address" value="{{ form_data.get('address', '') }}" /></label>
+  <label class="field md:col-span-2">Mobile (optional)<input name="mobile" value="{{ form_data.get('mobile', '') }}" /></label>
+  <div class="md:col-span-2">
+    <button type="submit" class="btn-primary">Save Record</button>
+  </div>
+</form>
+{% endblock %}
