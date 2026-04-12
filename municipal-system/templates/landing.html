@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bangla Municipal Record Digitization, Extraction, and Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="#" class="font-bold text-lg">BMREMS</a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-300">
+        <a href="#features" class="hover:text-white transition">Features</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+        <a href="#faq" class="hover:text-white transition">FAQ</a>
+        <a href="{{ url_for('dashboard') }}" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="max-w-7xl mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="inline-flex rounded-full border border-blue-400/40 bg-blue-400/10 text-blue-200 px-3 py-1 text-xs mb-6">Trusted by municipal teams and digitization programs</p>
+      <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight">Bangla Municipal Record Digitization, Extraction, and Management System</h1>
+      <p class="mt-6 text-lg text-slate-300">Turn Bangla municipal documents into structured, searchable records with OCR-assisted extraction, validation, and complete lifecycle management.</p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#final-cta" class="btn-primary">Book Demo</a>
+        <a href="{{ url_for('upload_document') }}" class="btn-secondary">Try Upload</a>
+      </div>
+    </div>
+    <div class="rounded-2xl bg-gradient-to-br from-blue-600/40 to-indigo-600/20 border border-white/10 p-6 shadow-2xl">
+      <div class="bg-slate-900 rounded-xl p-4 space-y-3 text-sm">
+        <div class="flex justify-between"><span>Upload municipal scan</span><span class="text-emerald-300">Detected</span></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="card-dark"><p>Holding No</p><strong>133/184</strong></div>
+          <div class="card-dark"><p>Ward</p><strong>08</strong></div>
+          <div class="card-dark"><p>Owner</p><strong>Zakir Hossain</strong></div>
+          <div class="card-dark"><p>Moholla</p><strong>Shulok Bohor</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block"><h2>Problem</h2><p>Municipal records are paper-based, inconsistent, and difficult to search, causing delays, errors, and reporting bottlenecks.</p></section>
+  <section class="section-block"><h2>Solution</h2><p>BMREMS combines OCR-assisted extraction with human-in-the-loop verification to create trusted digital records fast.</p></section>
+
+  <section class="section-block">
+    <h2>How It Works</h2>
+    <div class="grid md:grid-cols-5 gap-4 text-sm">
+      <div class="step-card">1. Upload Bangla image</div>
+      <div class="step-card">2. OCR extracts fields</div>
+      <div class="step-card">3. Translate/transliterate</div>
+      <div class="step-card">4. Verify & edit</div>
+      <div class="step-card">5. Save structured record</div>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <h2>Product Demo</h2>
+    <div class="bg-slate-900 border border-white/10 rounded-2xl p-6">
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="card-dark"><p>Total records</p><strong>24,310</strong></div>
+        <div class="card-dark"><p>Records added today</p><strong>312</strong></div>
+        <div class="card-dark"><p>Missing data alerts</p><strong>14</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section-block">
+    <h2>Features</h2>
+    <ul class="grid md:grid-cols-2 gap-4 text-slate-200">
+      <li class="feature-item">OCR-assisted extraction for Bangla forms</li>
+      <li class="feature-item">Manual record entry and correction</li>
+      <li class="feature-item">Search, filter, edit, and delete workflows</li>
+      <li class="feature-item">Structured SQLite storage and CSV export</li>
+    </ul>
+  </section>
+
+  <section class="section-block"><h2>Why Not Excel?</h2><p>Excel files break at scale: no audit trail, weak validation, duplicate chaos, and poor multi-user coordination.</p></section>
+  <section class="section-block"><h2>Use Cases</h2><p>Holding tax records, citizen ownership updates, ward-level audits, and NGO-led digitization drives.</p></section>
+  <section class="section-block"><h2>Testimonials</h2><p>“We reduced manual entry time by 48% in our first month.” — Municipal Data Officer</p></section>
+
+  <section id="pricing" class="section-block">
+    <h2>Pricing</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="pricing-card"><h3>Starter</h3><p>For pilot wards</p><strong>$49/mo</strong></div>
+      <div class="pricing-card border-blue-400"><h3>Growth</h3><p>For city departments</p><strong>$149/mo</strong></div>
+      <div class="pricing-card"><h3>Enterprise</h3><p>For statewide rollouts</p><strong>Custom</strong></div>
+    </div>
+  </section>
+
+  <section id="faq" class="section-block">
+    <h2>FAQ</h2>
+    <div class="space-y-3 text-slate-200">
+      <p><strong>Can we start with manual entry only?</strong> Yes, OCR is optional.</p>
+      <p><strong>Does this support Bengali + English names?</strong> Yes, with transliteration-ready fields.</p>
+      <p><strong>Can we export records?</strong> Yes, one-click CSV export.</p>
+    </div>
+  </section>
+
+  <section id="final-cta" class="max-w-7xl mx-auto px-4 py-16">
+    <div class="rounded-2xl bg-blue-600/20 border border-blue-400/30 p-10 text-center">
+      <h2 class="text-3xl font-bold">Digitize municipal records with confidence.</h2>
+      <p class="text-slate-200 mt-2">Move from paper dependency to clean, searchable digital records.</p>
+      <div class="mt-6 flex justify-center gap-4">
+        <a class="btn-primary" href="{{ url_for('dashboard') }}">Start Now</a>
+        <a class="btn-secondary" href="{{ url_for('upload_document') }}">Try Upload</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-8 text-center text-slate-400 text-sm">© 2026 BMREMS. All rights reserved.</footer>
+</body>
+</html>
