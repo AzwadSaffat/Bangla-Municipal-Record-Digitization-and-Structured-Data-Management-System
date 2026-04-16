@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | BMREMS{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+  <div>
+    <h1 class="text-2xl font-bold">Dashboard</h1>
+    <p class="text-slate-500">Operational overview of digitization records.</p>
+  </div>
+  <a href="{{ url_for('landing') }}" class="btn-secondary">Back to Website</a>
+</div>
+
+<div class="grid md:grid-cols-4 gap-4 mb-8">
+  <div class="stat-card"><p>Total records</p><h2>{{ total_records }}</h2></div>
+  <div class="stat-card"><p>Added today</p><h2>{{ added_today }}</h2></div>
+  <div class="stat-card"><p>Missing data fields</p><h2>{{ missing_data_count }}</h2></div>
+  <div class="stat-card"><p>Duplicate holdings</p><h2>{{ duplicate_holding_count }}</h2></div>
+</div>
+
+<div class="grid md:grid-cols-3 gap-4">
+  <a class="quick-card" href="{{ url_for('upload_document') }}">Upload Document</a>
+  <a class="quick-card" href="{{ url_for('add_record') }}">Add Record Manually</a>
+  <a class="quick-card" href="{{ url_for('view_records') }}">View Records</a>
+</div>
+{% endblock %}

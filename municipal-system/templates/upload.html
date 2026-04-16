@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Upload Document | BMREMS{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-2">Upload Bangla Municipal Document</h1>
+<p class="text-slate-500 mb-6">Upload scanned images, simulate OCR extraction, then review before save.</p>
+
+<div class="card mb-6">
+  <form method="post" enctype="multipart/form-data" class="space-y-4">
+    <input type="hidden" name="action" value="extract" />
+    <input type="file" name="document" accept="image/*" class="block w-full border border-slate-300 rounded-lg p-2 bg-white" required />
+    <button type="submit" class="btn-primary">Extract Data</button>
+  </form>
+</div>
+
+{% if extracted_data %}
+<div class="card">
+  <h2 class="text-lg font-semibold mb-4">Review Extracted Fields</h2>
+  <form method="post" class="grid md:grid-cols-2 gap-4">
+    <input type="hidden" name="action" value="save" />
+    <label class="field">Holding Number*<input name="holding_no" value="{{ extracted_data.holding_no }}" required /></label>
+    <label class="field">Ward No*<input name="ward_no" value="{{ extracted_data.ward_no }}" required /></label>
+    <label class="field">Circle No*<input name="circle_no" value="{{ extracted_data.circle_no }}" required /></label>
+    <label class="field">Moholla Name*<input name="moholla_name" value="{{ extracted_data.moholla_name }}" required /></label>
+    <label class="field">Owner Name*<input name="owner_name" value="{{ extracted_data.owner_name }}" required /></label>
+    <label class="field">Father/Husband Name*<input name="father_name" value="{{ extracted_data.father_name }}" required /></label>
+    <label class="field md:col-span-2">Address<input name="address" value="{{ extracted_data.address or '' }}" /></label>
+    <label class="field md:col-span-2">Mobile<input name="mobile" value="{{ extracted_data.mobile or '' }}" /></label>
+    <div class="md:col-span-2 flex gap-3">
+      <button type="submit" class="btn-primary">Save Record</button>
+      <a href="{{ url_for('upload_document') }}" class="btn-secondary">Reset</a>
+    </div>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

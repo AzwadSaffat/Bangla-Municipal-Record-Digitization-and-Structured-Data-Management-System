@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Edit Record | BMREMS{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-2">Edit Record #{{ record.id }}</h1>
+<p class="text-slate-500 mb-6">Update and validate municipal record fields.</p>
+
+<form method="post" class="card grid md:grid-cols-2 gap-4">
+  <label class="field">Holding Number*<input name="holding_no" value="{{ record.holding_no }}" required /></label>
+  <label class="field">Ward No*<input name="ward_no" value="{{ record.ward_no }}" required /></label>
+  <label class="field">Circle No*<input name="circle_no" value="{{ record.circle_no }}" required /></label>
+  <label class="field">Moholla Name*<input name="moholla_name" value="{{ record.moholla_name }}" required /></label>
+  <label class="field">Owner Name*<input name="owner_name" value="{{ record.owner_name }}" required /></label>
+  <label class="field">Father/Husband Name*<input name="father_name" value="{{ record.father_name }}" required /></label>
+  <label class="field md:col-span-2">Address<input name="address" value="{{ record.address or '' }}" /></label>
+  <label class="field md:col-span-2">Mobile<input name="mobile" value="{{ record.mobile or '' }}" /></label>
+  <div class="md:col-span-2 flex gap-3">
+    <button type="submit" class="btn-primary">Update Record</button>
+    <a href="{{ url_for('view_records') }}" class="btn-secondary">Cancel</a>
+  </div>
+</form>
+{% endblock %}
