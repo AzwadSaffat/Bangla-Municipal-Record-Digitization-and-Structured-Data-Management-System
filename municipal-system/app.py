@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import os
 from datetime import datetime, date
 from io import StringIO
@@ -21,35 +22,46 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db.init_app(app)
 
-
 with app.app_context():
     db.create_all()
 
 
-def extract_data_from_image(image):
+def extract_data_from_image(image_input):
     """
     This simulates OCR extraction and can be replaced with real Bangla OCR.
     """
-    filename = getattr(image, "filename", "") or ""
-    base = os.path.splitext(filename)[0].lower()
+    mock_profiles = [
+        {"moholla_name": "Shulok Bohor", "owner_name": "Zakir Hossain", "father_name": "Mrito Osman Ali"},
+        {"moholla_name": "Patharghata", "owner_name": "Nasima Akter", "father_name": "Abdul Karim"},
+        {"moholla_name": "Anderkilla", "owner_name": "Rahim Uddin", "father_name": "Anwar Hossain"},
+        {"moholla_name": "Kotwali", "owner_name": "Shahnaz Begum", "father_name": "Nurul Amin"},
+        {"moholla_name": "Halishahar", "owner_name": "Sohel Rana", "father_name": "Abdus Sattar"},
+    ]
 
-    if "ward10" in base:
-        return {
-            "holding_no": "210/44",
-            "ward_no": "10",
-            "circle_no": "02",
-            "moholla_name": "Patharghata",
-            "owner_name": "Nasima Akter",
-            "father_name": "Abdul Karim",
-        }
+    if isinstance(image_input, str):
+        with open(image_input, "rb") as img:
+            image_bytes = img.read()
+    else:
+        image_bytes = image_input.read()
+        image_input.seek(0)
+
+    digest = hashlib.sha256(image_bytes).hexdigest()
+
+    seed = int(digest[:8], 16)
+    profile = mock_profiles[seed % len(mock_profiles)]
+
+    ward_no = f"{(seed % 20) + 1:02d}"
+    circle_no = f"{(seed % 5) + 1:02d}"
+    holding_main = (seed % 899) + 100
+    holding_sub = ((seed // 17) % 400) + 1
 
     return {
-        "holding_no": "133/184",
-        "ward_no": "08",
-        "circle_no": "01",
-        "moholla_name": "Shulok Bohor",
-        "owner_name": "Zakir Hossain",
-        "father_name": "Mrito Osman Ali",
+        "holding_no": f"{holding_main}/{holding_sub}",
+        "ward_no": ward_no,
+        "circle_no": circle_no,
+        "moholla_name": profile["moholla_name"],
+        "owner_name": profile["owner_name"],
+        "father_name": profile["father_name"],
     }
 
 
@@ -114,7 +126,7 @@ def upload_document():
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             file.save(file_path)
 
-            extracted = extract_data_from_image(file)
+            extracted = extract_data_from_image(file_path)
             flash("Data extracted successfully. Verify and save.", "success")
             return render_template(
                 "upload.html",
@@ -278,8 +290,7 @@ def export_records_csv():
     )
 
 
-
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host="0.0.0.0", port=port, debug=debug)
