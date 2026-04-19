@@ -27,7 +27,7 @@ with app.app_context():
     db.create_all()
 
 
-def extract_data_from_image(image_path: str):
+def extract_data_from_image(image_input):
     """
     This simulates OCR extraction and can be replaced with real Bangla OCR.
     """
@@ -39,8 +39,14 @@ def extract_data_from_image(image_path: str):
         {"moholla_name": "Halishahar", "owner_name": "Sohel Rana", "father_name": "Abdus Sattar"},
     ]
 
-    with open(image_path, "rb") as img:
-        digest = hashlib.sha256(img.read()).hexdigest()
+    if isinstance(image_input, str):
+        with open(image_input, "rb") as img:
+            image_bytes = img.read()
+    else:
+        image_bytes = image_input.read()
+        image_input.seek(0)
+
+    digest = hashlib.sha256(image_bytes).hexdigest()
 
     seed = int(digest[:8], 16)
     profile = mock_profiles[seed % len(mock_profiles)]
@@ -286,4 +292,6 @@ def export_records_csv():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host="0.0.0.0", port=port, debug=debug)
